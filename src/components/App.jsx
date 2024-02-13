@@ -4,10 +4,16 @@ function App() {
 
     const [headingText, setHeadingText] = useState("Hello");
     const [isMousedOver, setMouseOver] = useState(false);
-    const [name, setName] = useState("");
+    const [contact, setContact] = useState({
+        firstName: "",
+        lastName: "",
+        email: ""
+    })
 
     function handleClick(){
-        setHeadingText(`${headingText} ${name} `);
+        setContact({firstName : '', lastName : '', email : ''});
+        const name = `${contact["firstName"]} ${contact["lastName"]}`;
+        setHeadingText(`${headingText} ${name}  `);
     }
     
     function handleMouseOver(){
@@ -19,8 +25,36 @@ function App() {
     }
 
     function handleChange(event){
-        console.log(event.target.value);
-        setName(event.target.value)
+
+        const {value, name} = event.target;
+
+        switch (name){
+            case 'firstName':
+                setContact({
+                    firstName: value,
+                    lastName: contact["lastName"],
+                    email: contact["email"]
+                });
+                break;
+            case 'lastName':
+                setContact({
+                    firstName: contact["firstName"],
+                    lastName: value,
+                    email: contact["email"],
+                });
+                break;
+            case 'email':
+                setContact({
+                    firstName: contact["firstName"],
+                    lastName: contact["lastName"],
+                    email: value
+                });
+                break;
+            default:
+                break;
+        }
+
+        console.log(event.target.value)        
         setHeadingText("Hello")
     }
    
@@ -29,8 +63,23 @@ function App() {
         <h1>{headingText}</h1>
         <input 
             type="text" 
-            placeholder="What's your name?" 
-            value = {name}
+            name="firstName"
+            placeholder="First Name?" 
+            value = {contact["firstName"]}
+            onChange={handleChange}
+        />
+        <input 
+            type="text" 
+            name="lastName"
+            placeholder="Last Name?" 
+            value = {contact["lastName"]}
+            onChange={handleChange}
+        />
+          <input 
+            type="text" 
+            name="email"
+            placeholder="email?" 
+            value = {contact["email"]}
             onChange={handleChange}
         />
         <button 
