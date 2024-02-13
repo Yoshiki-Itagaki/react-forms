@@ -11,7 +11,7 @@ function App() {
     })
 
     function handleClick(){
-        setContact({firstName : '', lastName : '', email : ''});
+        console.log(contact);
         const name = `${contact["firstName"]} ${contact["lastName"]}`;
         setHeadingText(`${headingText} ${name}  `);
     }
@@ -28,31 +28,12 @@ function App() {
 
         const {value, name} = event.target;
 
-        switch (name){
-            case 'firstName':
-                setContact({
-                    firstName: value,
-                    lastName: contact["lastName"],
-                    email: contact["email"]
-                });
-                break;
-            case 'lastName':
-                setContact({
-                    firstName: contact["firstName"],
-                    lastName: value,
-                    email: contact["email"],
-                });
-                break;
-            case 'email':
-                setContact({
-                    firstName: contact["firstName"],
-                    lastName: contact["lastName"],
-                    email: value
-                });
-                break;
-            default:
-                break;
-        }
+        setContact( prevValue => {
+            return {
+                ...prevValue,
+                [name] : value
+            }
+        })
 
         console.log(event.target.value)        
         setHeadingText("Hello")
